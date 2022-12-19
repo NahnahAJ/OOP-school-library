@@ -4,7 +4,7 @@
 # Override can_use_services? so it always returns true.
 
 class Teacher < Person
-  def initialize(age, name = 'Unknown', parent_permission: true)
+  def initialize(age, name = 'Unknown', parent_permission: true, specialization)
     super(name, parent_permission, age)
     @specialization = specialization
   end
