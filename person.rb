@@ -7,9 +7,9 @@
 # Private method is_of_age? that returns true if @age is greater or equal to 18 and false otherwise.
 # Public method can_use_services? that returns true if person is of age or if they have permission from parents.
 
-require_relative 'nameable.rb' 
-require_relative 'capitalize_decorator.rb'
-require_relative 'trimmer_decorator.rb'
+require_relative 'nameable'
+require_relative 'capitalize_decorator'
+require_relative 'trimmer_decorator'
 # Make sure that your Person class inherits from Nameable
 class Person < Nameable
   attr_accessor :name, :age

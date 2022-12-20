@@ -1,4 +1,4 @@
-require_relative 'base_decorator.rb'
+require_relative 'base_decorator'
 # For the CapitalizeDecorator:
 # Create a class that inherits from the base Decorator class.
 class CapitalizeDecorator < BaseDecorator
