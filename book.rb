@@ -2,6 +2,7 @@
 # @title and @author instance variables, should be initialized in the constructor.
 # Setters and getters for instance variables (remember about attr_accessor).
 
+require_relative 'rental'
 class Book
   attr_accessor :title, :author, :rentals
 
@@ -11,7 +12,7 @@ class Book
     @rentals = []
   end
 
-  def add_rental(rental)
-    @rentals << rental
+  def add_rental(person, date)
+    Rental.new(date, self, person)
   end
 end
