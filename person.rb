@@ -10,6 +10,7 @@
 require_relative 'nameable'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
+require_relative 'rental'
 # Make sure that your Person class inherits from Nameable
 class Person < Nameable
   attr_accessor :name, :age, :rentals
@@ -33,8 +34,8 @@ class Person < Nameable
     @name
   end
 
-  def add_rental(rental)
-    @rentals << rental
+  def add_rental(book, date)
+    Rental.new(date, book, self)
   end
 
   private
