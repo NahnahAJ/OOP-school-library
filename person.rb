@@ -10,9 +10,10 @@
 require_relative 'nameable'
 require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
+require_relative 'rental'
 # Make sure that your Person class inherits from Nameable
 class Person < Nameable
-  attr_accessor :name, :age
+  attr_accessor :name, :age, :rentals
   attr_reader :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)
@@ -21,6 +22,7 @@ class Person < Nameable
     @name = name
     @age = age
     @parent_permission = parent_permission
+    @rentals = []
   end
 
   def can_use_services?
@@ -30,6 +32,10 @@ class Person < Nameable
   # Make sure that this class has a method correct_name implemented. It should simply return the name attribute.
   def correct_name
     @name
+  end
+
+  def add_rental(book, date)
+    Rental.new(date, book, self)
   end
 
   private
