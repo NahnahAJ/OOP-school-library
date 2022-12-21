@@ -12,7 +12,7 @@ require_relative 'capitalize_decorator'
 require_relative 'trimmer_decorator'
 # Make sure that your Person class inherits from Nameable
 class Person < Nameable
-  attr_accessor :name, :age ,:rentals
+  attr_accessor :name, :age, :rentals
   attr_reader :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)

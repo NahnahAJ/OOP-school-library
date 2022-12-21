@@ -3,7 +3,8 @@
 # Setters and getters for instance variables (remember about attr_accessor).
 
 class Book
-  attr_accessor :title, :author :rentals
+  attr_accessor :title, :author, :rentals
+
   def initialize(title, author)
     @title = title
     @author = author
