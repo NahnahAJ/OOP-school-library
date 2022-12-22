@@ -5,7 +5,8 @@
 #   Create a book.
 #   Create a rental.
 #   List all rentals for a given person id.
-#   In your main.rb define the entry point, this will be a method called main that is invoked at the end of your file. This method should do the following:
+#   In your main.rb define the entry point, this will be a method called main
+# that is invoked at the end of your file. This method should do the following:
 #   Present the user with a list of options to perform.
 #   Lets users choose an option.
 #   If needed, ask for parameters for the option.
@@ -30,65 +31,72 @@ class App
   end
 
   def list_people
-    if @people.length == 0
-      puts "There are no people in the library"
+    if @people.length.zero?
+      puts 'There are no people in the library'
     else
-      @people.each do |person| 
-        if person.class == Student
-          puts "Student: #{person.name} (Id: #{person.id}, Age: #{person.age}, Parent Permission: #{person.parent_permission})"
+      @people.each do |person|
+        if person.instance_of?(Student)
+          puts "[Student]: Name: #{person.name}, Id: #{person.id}, Age: #{person.age}"
         else
-          puts "Teacher: #{person.name} (Id: #{person.id}, Age: #{person.age}, Specialization: #{person.specialization})"
+          puts "[Teacher]: Name: #{person.name}, Id: #{person.id}, Age: #{person.age}"
         end
       end
     end
   end
 
   def create_person
-    print 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
+    puts 'Do you want to create a student (1) or a teacher (2)? [Input the number]: '
     person_type = gets.chomp
 
-    if person_type == '1'
-
-      print 'Name: '
-      name = gets.chomp
-
-      print 'Age: '
-      age = gets.chomp.to_i
-
-      print 'Classroom:'
-      classroom = Classroom.new(gets.chomp)
-
-      print 'Has parent permission? [Y/N]: '
-      parent_permission = gets.chomp
-      if parent_permission == 'Y' || parent_permission.downcase == 'y'
-        parent_permission = true
-      elsif parent_permission == 'N' || parent_permission.downcase == 'n'
-        parent_permission = false
-      else
-        puts 'Invalid input: please enter Y or N'
-        return
-      end
-
-      @people << Student.new(age, classroom, name, parent_permission)
+    case person_type
+    when '1'
+      student = create_student
+      @people << student
       puts 'Person created successfully'
 
-    elsif person_type == '2'
-      
-      print 'Name: '
-      name = gets.chomp
-
-      print 'Age: '
-      age = gets.chomp.to_i
-
-      print 'Specialization: '
-      specialization = gets.chomp
-
-      @people << Teacher.new(age, specialization, name)
+    when '2'
+      teacher = create_teacher
+      @people << teacher
       puts 'Person created successfully'
-
     else
       puts 'Invalid option'
     end
+  end
+
+  def create_student
+    print 'Name: '
+    name = gets.chomp
+
+    print 'Age: '
+    age = gets.chomp.to_i
+
+    print 'Classroom:'
+    classroom = Classroom.new(gets.chomp)
+
+    print 'Has parent permission? [Y/N]: '
+    parent_permission = gets.chomp
+    if parent_permission == 'Y' || parent_permission.downcase == 'y'
+      parent_permission = true
+    elsif parent_permission == 'N' || parent_permission.downcase == 'n'
+      parent_permission = false
+    else
+      return nil
+    end
+
+    Student.new(age, classroom, parent_permission, name)
+  end
+
+  def create_teacher
+    print 'Name: '
+    name = gets.chomp
+
+    print 'Age: '
+    age = gets.chomp.to_i
+
+    print 'Specialization: '
+    specialization = gets.chomp
+
+    Teacher.new(age, specialization, name)
   end
 
   def create_book
@@ -109,7 +117,9 @@ class App
     book_index = gets.chomp.to_i
 
     puts 'Select a person from the following list by number (not id)'
-    @people.each_with_index { |person, index| puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age} " }
+    @people.each_with_index do |person, index|
+      puts "#{index}) [#{person.class}] Name: #{person.name}, ID: #{person.id}, Age: #{person.age} "
+    end
 
     person_index = gets.chomp.to_i
 
@@ -126,7 +136,7 @@ class App
 
     rentals = @rentals.filter { |rental| rental.person.id == id }
     puts 'Rentals:'
-    rentals.each { | rental | puts "Date: #{rental.date}, Book: #{rental.book.title} by #{rental.book.author}" }
+    rentals.each { |rental| puts "Date: #{rental.date}, Book: #{rental.book.title} by #{rental.book.author}" }
   end
 end
 
@@ -135,40 +145,28 @@ def main
 
   puts 'Welcome to School Library App!'
 
-  options = [
-    'List all books',
-    'List all people',
-    'Create a person',
-    'Create a book',
-    'Create a rental',
-    'List all rentals for a given person id',
-    'Exit'
-  ]
+  options = {
+    'List all books' => :list_books,
+    'List all people' => :list_people,
+    'Create a person' => :create_person,
+    'Create a book' => :create_book,
+    'Create a rental' => :create_rental,
+    'List all rentals for a given person id' => :list_rentals_by_person_id,
+    'Exit' => :exit
+  }
 
+  loop_method(app, options)
+end
+
+def loop_method(app, options)
   loop do
-    puts 'Please choose an option by entering a number:'
-    options.each_with_index { |option, index| puts "#{index}) #{option}" }
-
-    option = gets.chomp.to_i
-
-    case option
-    when 0
-      app.list_books
-    when 1
-      app.list_people
-    when 2
-      app.create_person
-    when 3
-      app.create_book
-    when 4
-      app.create_rental
-    when 5
-      app.list_rentals_by_person_id
-    when 6
+    option = get_menu_option(options)
+    method = options[option]
+    if method == :exit
       puts 'Thank you for using this app!'
       break
     else
-      puts 'That is not a valid option'
+      app.send(method)
     end
 
     puts 'Press any key to continue'
@@ -176,4 +174,16 @@ def main
   end
 end
 
+def get_menu_option(options)
+  puts 'Please choose an option by entering a number:'
+  options.each_with_index { |(option, _), index| puts "#{index}) #{option}" }
+
+  option = gets.chomp.to_i
+  if option >= 0 && option < options.size
+    options.keys[option]
+  else
+    puts 'That is not a valid option'
+    get_menu_option(options)
+  end
+end
 main
