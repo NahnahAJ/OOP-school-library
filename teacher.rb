@@ -4,8 +4,9 @@
 # Override can_use_services? so it always returns true.
 
 class Teacher < Person
-  def initialize(age, specialization, name = 'Unknown', parent_permission: true)
-    super(name, parent_permission, age)
+  attr_reader :specialization
+  def initialize(age, specialization, name = 'Unknown')
+    super(age, name, parent_permission: true)
     @specialization = specialization
   end
 
