@@ -18,8 +18,10 @@ require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
 require_relative 'classroom'
+require_relative 'preserve'
 
 class App
+  attr_accessor :books, :people, :rentals
   def initialize
     @books = []
     @people = []
@@ -105,7 +107,6 @@ class App
 
     print 'Author: '
     author = gets.chomp
-
     @books << Book.new(title, author)
     puts 'Book created successfully'
   end
