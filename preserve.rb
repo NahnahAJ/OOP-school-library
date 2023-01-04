@@ -33,7 +33,7 @@ class Preserve
     end
 
     @app.instance_variable_get(:@rentals).each do |rental|
-      rentals_json.push({ Date: rental.date, Book: rental.book.title, Person: rental.person.name, Id: rental.person.id})
+      rentals_json.push({ Date: rental.date, Book: rental.book, Person: rental.person, Id: rental.person.id})
     end
     File.write('data_files/books.json', JSON.generate(books_json))
     File.write('data_files/people.json', JSON.generate(people_json))
@@ -60,24 +60,18 @@ class Preserve
       end
     end
 
-    # rentals_json.each do |rental|
-    #   @app.rentals.push(Rental.new(rental['Date'], rental['Person'], rental['Book']))
-    # end
-    rentals_json.each do |person|
-      if person['type'] == 'Student'
-        new_student = Student.new(person['age'], person['classroom'], person['parent_permission'], person['name'])
-        new_student.id = person['Id']
-        # @app.people.push(new_student)
-        new_book = Book.new(person['Title'], person['Author'])
-        @app.rentals.push(Rental.new(person['Date'], new_book, new_student))
-        # @app.books.push(new_book) 
-      else
-        new_teacher = Teacher.new(person['age'], person['specialization'], person['name'])
-        new_teacher.id = person['Id']
-        # @app.people.push(new_teacher)
-        new_book = Book.new(person['Title'], person['Author'])
-        @app.rentals.push(Rental.new(person['Date'], new_book , new_teacher))
+    rentals_json.each do |rental|
+      new_book = Book.new(rental['Book']['Title'], rental['Book']['Author'])
+
+      if rental['Person']['type'] == 'Student'
+      new_person = Student.new(rental['Person']['age'], rental['Person']['classroom'], rental['Person']['parent_permission'], rental['Person']['name'])
+      new_person.id = rental['Id']
+      else 
+      new_person = Teacher.new(rental['Person']['age'], rental['Person']['specialization'], rental['Person']['name'])
+      new_person.id = rental['Id']
       end
+
+      @app.rentals.push(Rental.new(rental['Date'], new_book, new_person))
     end
   end
 end
