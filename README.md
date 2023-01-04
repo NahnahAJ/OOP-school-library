@@ -111,7 +111,7 @@ To run tests, run the following command:
 
 <!-- AUTHORS -->
 
-## 👥 Author <a name="author"></a>
+## 👥 Authors <a name="author"></a>
 
 > I was the sole collaborator in this project.
 
@@ -120,6 +120,12 @@ To run tests, run the following command:
 - GitHub: [@NahnahAJ](https://github.com/NahnahAJ)
 - Twitter: [@NahnahAhjuwah](https://https://twitter.com/NahnahAhjuwah)
 - LinkedIn: [Felicia-Awuah](https://www.linkedin.com/in/felicia-awuah-gyedua/)
+
+👤 **Faranosh Amini**
+
+- GitHub: [@githubhandle](https://github.com/FaranoshAmini)
+- Twitter: [@twitterhandle](https://twitter.com/Faranosh_Amini)
+- LinkedIn: [LinkedIn](https://www.linkedin.com/in/faranosh-amini-9b925b23a/)
 
 
 <p align="right">(<a href="#readme-top">back to top</a>)</p>

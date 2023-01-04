@@ -21,7 +21,8 @@ class Preserve
     @app.books.each { |book| books_json.push({ Title: book.title, Author: book.author }) }
 
     @app.instance_variable_get(:@people).each do |person|
-      if person.instance_of?('Student')
+      puts person.class
+      if person('class') == 'Student'
         people_json.push({ type: person.class, name: person.name, age: person.age,
                            parent_permission: person.parent_permission })
       else
