@@ -5,6 +5,8 @@ def main
   app = App.new
 
   puts 'Welcome to School Library App!'
+  loaded_data = Preserve.new(app)
+  loaded_data.load_data
 
   options = {
     'List all books' => :list_books,
