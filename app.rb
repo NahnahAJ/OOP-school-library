@@ -18,8 +18,11 @@ require_relative 'teacher'
 require_relative 'book'
 require_relative 'rental'
 require_relative 'classroom'
+require_relative 'preserve'
 
 class App
+  attr_accessor :books, :people, :rentals
+
   def initialize
     @books = []
     @people = []
@@ -31,7 +34,7 @@ class App
   end
 
   def list_people
-    if @people.length.zero?
+    if @people.empty?
       puts 'There are no people in the library'
     else
       @people.each do |person|
@@ -105,7 +108,6 @@ class App
 
     print 'Author: '
     author = gets.chomp
-
     @books << Book.new(title, author)
     puts 'Book created successfully'
   end

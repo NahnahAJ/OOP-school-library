@@ -13,8 +13,7 @@ require_relative 'trimmer_decorator'
 require_relative 'rental'
 # Make sure that your Person class inherits from Nameable
 class Person < Nameable
-  attr_accessor :name, :age, :rentals, :parent_permission
-  attr_reader :id
+  attr_accessor :name, :age, :rentals, :parent_permission, :id
 
   def initialize(age, name = 'Unknown', parent_permission: true)
     super()
