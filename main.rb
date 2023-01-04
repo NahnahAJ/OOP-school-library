@@ -1,4 +1,5 @@
 require_relative 'app'
+require_relative 'preserve'
 
 def main
   app = App.new
@@ -23,6 +24,8 @@ def loop_method(app, options)
     option = get_menu_option(options)
     method = options[option]
     if method == :exit
+      data = Preserve.new(app)
+      data.save_data
       puts 'Thank you for using this app!'
       break
     else
