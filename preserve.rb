@@ -25,15 +25,16 @@ class Preserve
     @app.instance_variable_get(:@people).each do |person|
       if person.instance_of?(Student)
         people_json.push({ type: person.class, name: person.name, age: person.age,
-                           parent_permission: person.parent_permission, Id: person.id})
+                           parent_permission: person.parent_permission, Id: person.id })
       else
         people_json.push({ type: person.class, name: person.name, age: person.age,
-                           parent_permission: person.parent_permission, specialization: person.specialization , Id: person.id})
+                           specialization: person.specialization, Id: person.id })
       end
     end
 
     @app.instance_variable_get(:@rentals).each do |rental|
-      rentals_json.push({ Date: rental.date, Book: rental.book, Person: rental.person, Id: rental.person.id})
+      rentals_json.push({ Date: rental.date, Book: rental.book.title, Person: rental.person.name,
+                          Id: rental.person.id })
     end
     File.write('data_files/books.json', JSON.generate(books_json))
     File.write('data_files/people.json', JSON.generate(people_json))
@@ -53,7 +54,7 @@ class Preserve
         student = Student.new(person['age'], person['classroom'], person['parent_permission'], person['name'])
         student.id = person['Id']
         @app.people.push(student)
-    else
+      else
         teacher = Teacher.new(person['age'], person['specialization'], person['name'])
         teacher.id = person['Id']
         @app.people.push(teacher)
@@ -61,17 +62,18 @@ class Preserve
     end
 
     rentals_json.each do |rental|
-      new_book = Book.new(rental['Book']['Title'], rental['Book']['Author'])
-
-      if rental['Person']['type'] == 'Student'
-      new_person = Student.new(rental['Person']['age'], rental['Person']['classroom'], rental['Person']['parent_permission'], rental['Person']['name'])
-      new_person.id = rental['Id']
-      else 
-      new_person = Teacher.new(rental['Person']['age'], rental['Person']['specialization'], rental['Person']['name'])
-      new_person.id = rental['Id']
-      end
+      new_book = get_book(rental['Book'])
+      new_person = get_person(rental['Person'])
 
       @app.rentals.push(Rental.new(rental['Date'], new_book, new_person))
     end
+  end
+
+  def get_person(name)
+    @app.people.find { |person| person.name == name }
+  end
+
+  def get_book(title)
+    @app.books.find { |book| book.title == title }
   end
 end
