@@ -20,19 +20,19 @@ class Preserve
 
     @app.books.each { |book| books_json.push({ Title: book.title, Author: book.author }) }
 
-    @app.instance_variable_get(:@people).each {|person|
-      if person.class == 'Student'
+    @app.instance_variable_get(:@people).each do |person|
+      if person.instance_of?('Student')
         people_json.push({ type: person.class, name: person.name, age: person.age,
                            parent_permission: person.parent_permission })
       else
         people_json.push({ type: person.class, name: person.name, age: person.age,
                            parent_permission: person.parent_permission, specialization: person.specialization })
       end
-    }
+    end
 
-    @app.instance_variable_get(:@rentals).each { |rental|
+    @app.instance_variable_get(:@rentals).each do |rental|
       rentals_json.push({ Date: rental.date, Person: rental.person.name, Book: rental.book.title })
-  }
+    end
     File.write('data_files/books.json', JSON.generate(books_json))
     File.write('data_files/people.json', JSON.generate(people_json))
     File.write('data_files/rentals.json', JSON.generate(rentals_json))

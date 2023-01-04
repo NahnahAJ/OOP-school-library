@@ -22,6 +22,7 @@ require_relative 'preserve'
 
 class App
   attr_accessor :books, :people, :rentals
+
   def initialize
     @books = []
     @people = []
