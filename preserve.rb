@@ -21,7 +21,7 @@ class Preserve
     @app.books.each { |book| books_json.push({ Title: book.title, Author: book.author }) }
 
     @app.instance_variable_get(:@people).each do |person|
-      if person.class == 'Student'
+      if person.instance_of?('Student')
         people_json.push({ type: person.class, name: person.name, age: person.age,
                            parent_permission: person.parent_permission })
       else
@@ -48,26 +48,25 @@ class Preserve
     puts rentals_json
 
     unless @app.books.empty?
-    books_json.each do |book|
-      @app.books.push(Book.new(book['Title'], book['Author']))
-    end
-  end
-
-    unless @app.people.empty?
-    people_json.each do |person|
-      if person['type'] == 'Student'
-        @app.people.push(Student.new(person['age'], 'Classroom', person['parent_permission'], person['name']))
-      else
-        @app.people.push(Teacher.new(person['age'], person['specialization'], person['name']))
+      books_json.each do |book|
+        @app.books.push(Book.new(book['Title'], book['Author']))
       end
     end
+
+    unless @app.people.empty?
+      people_json.each do |person|
+        if person['type'] == 'Student'
+          @app.people.push(Student.new(person['age'], 'Classroom', person['parent_permission'], person['name']))
+        else
+          @app.people.push(Teacher.new(person['age'], person['specialization'], person['name']))
+        end
+      end
     end
 
-    unless @app.rentals.empty?
+    return if @app.rentals.empty?
+
     rentals_json.each do |rental|
       @app.rentals.push(Rental.new(rental['Date'], rental['Book'], rental['Person']))
     end
   end
-  end
-
 end
