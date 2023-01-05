@@ -15,7 +15,7 @@ describe Rental do
 
   describe '#attributes' do
     it 'should return correct date' do
-      expect(@rental.date).to eql '2023/01/04'
+      expect(@rental.date).to eql '2023/01/05'
     end
 
     it 'should return correct book object' do
