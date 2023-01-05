@@ -2,35 +2,35 @@ require_relative 'spec_helper'
 
 describe Student do
   before :each do
-    @student = Student.new(24, "ruby class", true)
+    @student = Student.new(24, 'ruby class', true)
   end
 
-  describe "#studentAge" do 
-    it "should return the age of the student" do
+  describe '#studentAge' do
+    it 'should return the age of the student' do
       expect(@student.age).to eql 24
     end
   end
 
-  describe "#studentClass" do 
-    it "should return the class of the student" do
-      expect(@student.classroom).to eql "ruby class"
+  describe '#studentClass' do
+    it 'should return the class of the student' do
+      expect(@student.classroom).to eql 'ruby class'
     end
   end
 
-  describe "#parent_permission" do 
-    it "should return the permission status of the student" do
+  describe '#parent_permission' do
+    it 'should return the permission status of the student' do
       expect(@student.parent_permission).target == true
     end
   end
 
-  describe "#play_hooky" do
-    it "should return the play hooky status of the student" do
+  describe '#play_hooky' do
+    it 'should return the play hooky status of the student' do
       expect(@student.play_hooky).to eql '¯(ツ)/¯'
     end
   end
 
   describe '#classroom contents' do
-  let(:classroom) { double('classroom', students: []) }
+    let(:classroom) { double('classroom', students: []) }
     it 'sets the classroom attribute' do
       @student.classroom = classroom
       expect(@student.classroom).to eq(classroom)

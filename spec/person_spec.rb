@@ -2,23 +2,23 @@ require_relative 'spec_helper'
 
 describe Person do
   before :each do
-    @person = Person.new(24, "Nicholas")
+    @person = Person.new(24, 'Nicholas')
   end
-  describe "#initialize" do
+  describe '#initialize' do
     it 'creates a new Person instance' do
       expect(@person).to be_an_instance_of(Person)
     end
   end
 
-  describe "#age" do
-    it "expects age to return a number" do
+  describe '#age' do
+    it 'expects age to return a number' do
       expect(@person.age).to eql 24
     end
   end
 
-  describe "#name" do
-    it "expects name to return a string" do
-      expect(@person.name).to eql "Nicholas"
+  describe '#name' do
+    it 'expects name to return a string' do
+      expect(@person.name).to eql 'Nicholas'
     end
   end
 
@@ -41,14 +41,14 @@ describe Person do
 
   describe '#correct_name' do
     it 'returns the name attribute' do
-      expect(@person.correct_name).to eq("Nicholas")
+      expect(@person.correct_name).to eq('Nicholas')
     end
   end
 
   describe '#add_rental' do
-  let(:book) { double('book', rentals: []) }
-  let(:date) { double('date') }
-    it "creates an instance of Rental" do
+    let(:book) { double('book', rentals: []) }
+    let(:date) { double('date') }
+    it 'creates an instance of Rental' do
       expect(@person.add_rental(book, date)).to be_an_instance_of(Rental)
     end
   end
